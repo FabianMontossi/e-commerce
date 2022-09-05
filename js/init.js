@@ -1,3 +1,23 @@
+const username = localStorage.getItem("username");
+const password = localStorage.getItem("password");
+
+// Chequeamos si estamos logueados en la pagina
+function LoggedIn(){
+    let varLoggedIn = false;
+    if ((username !== null && password !== null) && (username !== "" && password !== ""))
+    varLoggedIn = true;
+    
+    return varLoggedIn;
+}
+
+if (LoggedIn()){
+    document.getElementById("login").textContent = username;
+    // Si estoy logueado, al clickearlo, que no te lleve al login.html
+    // ofrecer la posibilidad de log out con un dropdown
+}else{
+    window.location.href="login.html";
+}
+
 const CATEGORIES_URL = "https://japceibal.github.io/emercado-api/cats/cat.json";
 const PUBLISH_PRODUCT_URL = "https://japceibal.github.io/emercado-api/sell/publish.json";
 const PRODUCTS_URL = "https://japceibal.github.io/emercado-api/cats_products/";
