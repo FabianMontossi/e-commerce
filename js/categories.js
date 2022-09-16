@@ -6,9 +6,7 @@ let currentCategoriesArray = [];
 let currentSortCriteria = undefined;
 let minCount = undefined;
 let maxCount = undefined;
-//console.log(loggedIn, "asd");
-//let asd = "desdeCategories";
-//console.log(asd);
+
 function sortCategories(criteria, array){
     let result = [];
     if (criteria === ORDER_ASC_BY_NAME)

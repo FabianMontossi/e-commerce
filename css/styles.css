@@ -194,8 +194,42 @@ form{
   text-align: center;
 }
 
-img {
+/* LOGIN CSS */
+
+.login {
+
+}
+
+img.login {
   display: block;
   margin-left: auto;
   margin-right: auto;
+  width: 70%;
+  height: 50%;
 }
+
+input.login {
+  display: block;
+  margin: auto;
+}
+
+/*input.login:active{
+  border: 1px solid salmon
+}*/
+
+p.login {
+  
+}
+
+#loginBtn {
+  border: 1px solid gray;
+  border-radius: 2px;
+  color: white;
+  background-color:#0D6EFD
+}
+
+#loginBtn:hover {
+  background:#0B5ED7;
+}
+
+/* END LOGIN CSS */
