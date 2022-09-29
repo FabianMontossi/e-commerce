@@ -15,14 +15,24 @@ const sortAsc = document.getElementById("sortAsc");
 const sortDesc = document.getElementById("sortDesc");
 
 function ChangeProdTitles(catName) {
-    document.querySelector(".lead").innerHTML = `Verás aquí todos los ${catName} del sitio`;
-    document.getElementById("title-h2").innerHTML = catName;
+    if (catName !== "Deporte"){
+        document.querySelector(".lead").innerHTML = `Verás aquí todos los ${catName} del sitio`;
+        document.getElementById("title-h2").innerHTML = catName;
+    }else{
+        document.querySelector(".lead").innerHTML = `Verás aquí todos los productos de ${catName} del sitio`;
+        document.getElementById("title-h2").innerHTML = `Productos de ${catName}`;
+    }
+}
+
+function showProductInfo(productId){
+    localStorage.setItem('productId', productId);
+    window.location.href = "product-info.html";
 }
 
 function addProduct(){
     container.innerHTML += 
     `<div class="list-group-item list-group-item-action cursor-active">
-        <div class="row">
+        <div class="row" onclick="showProductInfo(${item.id});">
             <div class="col-3">
                 <img src="${item.image}" class="img-thumbnail">
             </div>
@@ -51,7 +61,6 @@ function showProducts(array, addToArray){
         if (parseInt(item.cost) > parseInt(maxCost)){
             maxCost = item.cost;
         }
-        
         addProduct();
     }
 }
@@ -59,7 +68,7 @@ function showProducts(array, addToArray){
 async function fetchProducts(param){
 
     const response = await fetch(param);
-    
+    console.log(response);    
     if (response.ok){
         const responseContents = await response.json();
         ChangeProdTitles(responseContents.catName);
