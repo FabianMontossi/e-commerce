@@ -8,7 +8,7 @@ function AssignCatID(){
     }
 }
 
-const DATA_URL = "https://japceibal.github.io/emercado-api/cats_products/" + AssignCatID() + ".json";
+const DATA_URL = PRODUCTS_URL + AssignCatID() + EXT_TYPE;
 const container = document.getElementById("productsContainer");
 const sortBySoldAmount = document.getElementById("sortBySoldAmount");
 const sortAsc = document.getElementById("sortAsc");
@@ -74,7 +74,7 @@ async function fetchProducts(param){
         ChangeProdTitles(responseContents.catName);
         showProducts(responseContents.products, true);
     } else{
-        alert("HTTP Error: " + response.code, response.status);
+        alert("Unfortunately, there's something wrong :("); //  !!!!!!!!!!! MISMO QUE EN AssignCatId()
     }
 }
 
