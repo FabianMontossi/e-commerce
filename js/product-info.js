@@ -1,14 +1,6 @@
-function AssignCatID(){
-    if(localStorage.getItem("catID") !== null){
-        return localStorage.getItem("catID");
-    } else{
-        // Si no hay ninguno, o no existe.
-        // Mostrar un cartel como el de Funcionalidad en desarrollo.
-    }
-}
 
 function assignProdId(){
-    if(localStorage.getItem("productId") !== null){
+    if(localStorage.getItem("productId") !== null && localStorage.getItem("productId") !== ""){
         return localStorage.getItem("productId");
     } else{
         // Si no hay ninguno, o no existe.
@@ -92,7 +84,7 @@ function showCommentaries(commentariesArray, prodId){
     return commentsHtml + `<hr>`;
 }
 
-function showProduct(product, recommendedProds){
+function showProduct(product){
     document.getElementById("main-content").innerHTML += `
     <div id="productInfo">
         <h2>${product.name}</h2>
@@ -145,11 +137,13 @@ async function fetchProduct(url){
     }
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+    if (localStorage.getItem("productId") && localStorage.getItem("productId") !== ""){
+        fetchCommentaries(PRODUCT_COMMENTS);
+        fetchProduct(PRODUCT_INFO);
+    }
+    else {
+        // Mostrar un cartel como el de Funcionalidad en desarrollo.
+    }
+});
 
-if (localStorage.getItem("productId")){
-    fetchCommentaries(PRODUCT_COMMENTS);
-    fetchProduct(PRODUCT_INFO);
-}
-else {
-    // Mostrar un cartel como el de Funcionalidad en desarrollo.
-}

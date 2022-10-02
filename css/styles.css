@@ -265,11 +265,9 @@ p.login {
   padding-right: 85px;
 }
 
-
 #commentaries{
   display: flex;
   flex-direction: column;
-  justify-content:;
 }
 
 .commentary{
