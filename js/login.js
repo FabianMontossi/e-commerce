@@ -23,11 +23,6 @@ function LoggedIn(){
 
 LoggedIn();
 
-// la idea era que...
-// Si NO estamos localizados en la pagina de log in, guardabamos el previousURL
-// asi cuando ya estuvieras logueado y llegas por alguna razon al login page, te autoredirige a esa pag
-
-
 // Login.html
 if (window.location.href.includes("login")){
     document.addEventListener("DOMContentLoaded", () => {

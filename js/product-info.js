@@ -1,4 +1,3 @@
-
 function assignProdId(){
     if(localStorage.getItem("productId") !== null && localStorage.getItem("productId") !== ""){
         return localStorage.getItem("productId");
@@ -16,6 +15,27 @@ const recommendedProducts = [];
 let productToShow = "";
 let productImages = [];
 let commentaries = [];
+
+function showCommentaries(commentariesArray, prodId){
+    let commentsHtml = "";
+    if (commentariesArray.length !== 0){
+        for (const comment of commentariesArray){
+
+            if (comment.product == prodId){
+                commentsHtml += `
+                <div class="commentary">
+                    <p><strong>${comment.user}</strong> - ${addStarsToCommentary(comment.score)}</p>
+                    <p>${comment.description}</p>
+                    <p style="font-size: 0.8em; font-style: italic;">Commented on ${comment.dateTime}</p>
+                </div>`;
+            }
+        }
+    }else{
+        commentsHtml = `<div class="commentary">No hay comentarios para este producto. Sé el primero en comentar!</div>`;
+    }
+    
+    return commentsHtml + `<hr>`;
+}
 
 function imagesToShow(images){
     let content = `<div class="imgContainer">`;
@@ -63,27 +83,6 @@ function addStarsToCommentary(score){
     return scoreHtml;
 }
 
-function showCommentaries(commentariesArray, prodId){
-    let commentsHtml = "";
-    if (commentariesArray.length !== 0){
-        for (const comment of commentariesArray){
-
-            if (comment.product == prodId){
-                commentsHtml += `
-                <div class="commentary">
-                    <p><strong>${comment.user}</strong> - ${addStarsToCommentary(comment.score)}</p>
-                    <p>${comment.description}</p>
-                    <p style="font-size: 0.8em; font-style: italic;">Commented on ${comment.dateTime}</p>
-                </div>`;
-            }
-        }
-    }else{
-        commentsHtml = `<div class="commentary">No hay comentarios para este producto. Sé el primero en comentar!</div>`;
-    }
-    
-    return commentsHtml + `<hr>`;
-}
-
 function showProduct(product){
     document.getElementById("main-content").innerHTML += `
     <div id="productInfo">
@@ -116,8 +115,8 @@ async function fetchCommentaries(url){
 
     if (response.status === 200){
         const responseContent = await response.json();
-
         commentaries = responseContent;
+        fetchProduct(PRODUCT_INFO);
     } else {
         alert("Unfortunately, there was something wrong while fetching the data :(");
     }
@@ -140,7 +139,7 @@ async function fetchProduct(url){
 document.addEventListener("DOMContentLoaded", () => {
     if (localStorage.getItem("productId") && localStorage.getItem("productId") !== ""){
         fetchCommentaries(PRODUCT_COMMENTS);
-        fetchProduct(PRODUCT_INFO);
+        
     }
     else {
         // Mostrar un cartel como el de Funcionalidad en desarrollo.
