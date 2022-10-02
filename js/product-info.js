@@ -34,30 +34,25 @@ function imagesToShow(images){
     return (content += `</div>`);
 }
 
-function addProduct(product, recommendedProds){
-    document.getElementById("main-content").innerHTML += `
-    <div id="productInfo">
-        <h2>${product.name}</h2>
-        <hr>
-        <strong class="title">Precio</strong>
-        <p class="value"><strong style="font-size: 0.80em;">${product.currency}</strong> ${product.cost}</p>
-        <strong class="title">Descripción</strong>
-        <p class="value">${product.description}</p>
-        <strong class="title">Categoría</strong>
-        <p class="value">${product.category}</p>
-        <strong class="title">Cantidad vendida</strong>
-        <p class="value">${product.soldCount}</p>
-
-        <strong class="title">Imágenes Ilustrativas</strong>
-        ${imagesToShow(productImages)}
+function addCommentary(){
+    
+    if(LoggedIn()){
+        let commentary = "";
+        //if (!checkIfAlreadyCommented());
+        //else {esto de abajo}
         
-        <hr>
-        <h5>Comentarios:</h5>
-
-        <div id="commentaries">
-            ${addCommentaries(commentaries, productId)}
-        </div>
-    </div>`;
+        commentary += `
+        <div id="addCommentary">
+            <form>
+                <p><label for="commentaryTxt">Agrega un comentario sobre este producto</label></p>
+                
+                <textarea id="commentaryTxt" name="commentaryTxt" rows="5" cols="50" placeholder="Me encantó, 5 estrellas!"></textarea>
+                <br>
+                <input type="submit" id="submitCommentary" value="Submit">
+            </form>
+        </div>`;
+        return commentary;
+    }
 }
 
 function addStarsToCommentary(score){
@@ -76,7 +71,7 @@ function addStarsToCommentary(score){
     return scoreHtml;
 }
 
-function addCommentaries(commentariesArray, prodId){
+function showCommentaries(commentariesArray, prodId){
     let commentsHtml = "";
     if (commentariesArray.length !== 0){
         for (const comment of commentariesArray){
@@ -94,37 +89,66 @@ function addCommentaries(commentariesArray, prodId){
         commentsHtml = `<div class="commentary">No hay comentarios para este producto. Sé el primero en comentar!</div>`;
     }
     
-    return commentsHtml;
+    return commentsHtml + `<hr>`;
 }
 
-function relatedProducts(products){
-    for(let item of products){
-        recommendedProducts.push(item);
-    }
-    return recommendedProducts;
+function showProduct(product, recommendedProds){
+    document.getElementById("main-content").innerHTML += `
+    <div id="productInfo">
+        <h2>${product.name}</h2>
+        <hr>
+        <strong class="title">Precio</strong>
+        <p class="value"><strong style="font-size: 0.80em;">${product.currency}</strong> ${product.cost}</p>
+        <strong class="title">Descripción</strong>
+        <p class="value">${product.description}</p>
+        <strong class="title">Categoría</strong>
+        <p class="value">${product.category}</p>
+        <strong class="title">Cantidad vendida</strong>
+        <p class="value">${product.soldCount}</p>
+
+        <strong class="title">Imágenes Ilustrativas</strong>
+        ${imagesToShow(productImages)}
+        
+        <hr>
+        <h5>Comentario(s):</h5>
+
+        <div id="commentaries">
+            ${showCommentaries(commentaries, productId)}
+        </div>
+        ${addCommentary()}
+    </div>`;
 }
 
-async function fetchProducts(url, isProduct){
+async function fetchCommentaries(url){
     const response = await fetch(url);
 
-    if (isProduct && response.status === 200){        
+    if (response.status === 200){
+        const responseContent = await response.json();
+
+        commentaries = responseContent;
+    } else {
+        alert("Unfortunately, there was something wrong while fetching the data :(");
+    }
+}
+
+async function fetchProduct(url){
+    const response = await fetch(url);
+
+    if (response.status === 200){        
         const responseContent = await response.json();
 
         productImages = responseContent.images;
-        relatedProducts(responseContent.relatedProducts);
-        addProduct(responseContent);
-    
-    } else if (!isProduct && response.status === 200){
-        const responseContent = await response.json();
-        commentaries = responseContent;
+        showProduct(responseContent);
     } else {
-        alert("Unfortunately, there was something wrong while fetching data :(");
+        alert("Unfortunately, there was something wrong while fetching the data :(");
+        // Mostrar un cartel como el de Funcionalidad en desarrollo.
     }
 }
 
+
 if (localStorage.getItem("productId")){
-    fetchProducts(PRODUCT_COMMENTS, false);
-    fetchProducts(PRODUCT_INFO, true);
+    fetchCommentaries(PRODUCT_COMMENTS);
+    fetchProduct(PRODUCT_INFO);
 }
 else {
     // Mostrar un cartel como el de Funcionalidad en desarrollo.
