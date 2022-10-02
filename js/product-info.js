@@ -1,8 +1,7 @@
 function AssignCatID(){
     if(localStorage.getItem("catID") !== null){
         return localStorage.getItem("catID");
-    }
-    else{
+    } else{
         // Si no hay ninguno, o no existe.
         // Mostrar un cartel como el de Funcionalidad en desarrollo.
     }
@@ -11,43 +10,37 @@ function AssignCatID(){
 function assignProdId(){
     if(localStorage.getItem("productId") !== null){
         return localStorage.getItem("productId");
-    }
-    else{
+    } else{
         // Si no hay ninguno, o no existe.
         // Mostrar un cartel como el de Funcionalidad en desarrollo.
     }
 }
 
-//////////////      PROBAR LOGIN Y REGISTRO      /////////////
 
 const productId = localStorage.getItem("productId");
 const PRODUCT_INFO = "https://japceibal.github.io/emercado-api/products/" + assignProdId() + EXT_TYPE;
+const PRODUCT_COMMENTS = PRODUCT_INFO_COMMENTS_URL + assignProdId() + EXT_TYPE;
 const recommendedProducts = [];
 let productToShow = "";
 let productImages = [];
+let commentaries = [];
 
 function imagesToShow(images){
-    console.log("MM", images);
+    let content = `<div class="imgContainer">`;
+    
     for (let i = 0; i < images.length; i++){
-        console.log("mg/", productImages[i], window.location.href + /../ + productImages[i]);
-        
-        const content = `
-          <div id="images">
-              <div class"img-box">
-                  <img src="${window.location.href + /../ + productImages[i]}">
-              </div>
-          </div>`;
+        content += `<img class="productImg" src="${images[i]}">`; 
     }
+    return (content += `</div>`);
 }
-//////////////      PROBAR LOGIN Y REGISTRO      /////////////
 
 function addProduct(product, recommendedProds){
-    document.body.innerHTML += `
-    <div class="product-info">
+    document.getElementById("main-content").innerHTML += `
+    <div id="productInfo">
         <h2>${product.name}</h2>
         <hr>
         <strong class="title">Precio</strong>
-        <p class="value"><strong>${product.currency} </strong>${product.cost}</p>
+        <p class="value"><strong style="font-size: 0.80em;">${product.currency}</strong> ${product.cost}</p>
         <strong class="title">Descripción</strong>
         <p class="value">${product.description}</p>
         <strong class="title">Categoría</strong>
@@ -57,7 +50,51 @@ function addProduct(product, recommendedProds){
 
         <strong class="title">Imágenes Ilustrativas</strong>
         ${imagesToShow(productImages)}
+        
+        <hr>
+        <h5>Comentarios:</h5>
+
+        <div id="commentaries">
+            ${addCommentaries(commentaries, productId)}
+        </div>
     </div>`;
+}
+
+function addStarsToCommentary(score){
+    let scoreHtml = "";
+
+    for (let i = 0; i < 5; i++){
+        scoreHtml += `<span class="fa fa-star`; 
+        
+        if (i < Math.round(score)){
+            scoreHtml += `" style="color: orange;">`;
+        }
+        else if (i => Math.round(score)){
+            scoreHtml += `" style="color: black;">`;
+        }
+    }
+    return scoreHtml;
+}
+
+function addCommentaries(commentariesArray, prodId){
+    let commentsHtml = "";
+    if (commentariesArray.length !== 0){
+        for (const comment of commentariesArray){
+
+            if (comment.product == prodId){
+                commentsHtml += `
+                <div class="commentary">
+                    <p><strong>${comment.user}</strong> - ${addStarsToCommentary(comment.score)}</p>
+                    <p>${comment.description}</p>
+                    <p style="font-size: 0.8em; font-style: italic;">Commented on ${comment.dateTime}</p>
+                </div>`;
+            }
+        }
+    }else{
+        commentsHtml = `<div class="commentary">No hay comentarios para este producto. Sé el primero en comentar!</div>`;
+    }
+    
+    return commentsHtml;
 }
 
 function relatedProducts(products){
@@ -67,26 +104,28 @@ function relatedProducts(products){
     return recommendedProducts;
 }
 
-async function fetchProducts(url){
-    
+async function fetchProducts(url, isProduct){
     const response = await fetch(url);
 
-    if (response.status === 200){
+    if (isProduct && response.status === 200){        
         const responseContent = await response.json();
 
         productImages = responseContent.images;
-        console.log("img", productImages);
         relatedProducts(responseContent.relatedProducts);
         addProduct(responseContent);
+    
+    } else if (!isProduct && response.status === 200){
+        const responseContent = await response.json();
+        commentaries = responseContent;
     } else {
-        alert("Unfortunately, there's something wrong :(");
+        alert("Unfortunately, there was something wrong while fetching data :(");
     }
 }
 
-if (localStorage.getItem("productId")) fetchProducts(PRODUCT_INFO);
-
-console.log("productToShow", productToShow, "recommendedProducts", recommendedProducts);
-
-
-//////////////      PROBAR LOGIN Y REGISTRO      /////////////
-
+if (localStorage.getItem("productId")){
+    fetchProducts(PRODUCT_COMMENTS, false);
+    fetchProducts(PRODUCT_INFO, true);
+}
+else {
+    // Mostrar un cartel como el de Funcionalidad en desarrollo.
+}

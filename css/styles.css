@@ -233,3 +233,51 @@ p.login {
 }
 
 /* END LOGIN CSS */
+
+
+
+/* START PRODUCT-INFO */
+
+.imgContainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+}
+
+.productImg{
+  padding: 3px;
+  margin: 10px;
+  border: 1px solid #5e5e5e;
+  border-radius: 2px;
+  height: 150px; 
+  min-height: 125px; 
+  min-width: 200px;
+}
+
+.productImg:nth-child(1){
+  margin-left: 1px;
+}
+
+#productInfo{
+  margin-top: 20px;
+  padding: 10px;
+  padding-left: 85px;
+  padding-right: 85px;
+}
+
+
+#commentaries{
+  display: flex;
+  flex-direction: column;
+  justify-content:;
+}
+
+.commentary{
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+.commentary:last-child{
+  margin-bottom: 0px;
+}
+/* END PRODUCT-INFO */

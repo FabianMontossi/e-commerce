@@ -15,13 +15,15 @@ const sortAsc = document.getElementById("sortAsc");
 const sortDesc = document.getElementById("sortDesc");
 
 function ChangeProdTitles(catName) {
-    if (catName !== "Deporte"){
-        document.querySelector(".lead").innerHTML = `Verás aquí todos los ${catName} del sitio`;
-        document.getElementById("title-h2").innerHTML = catName;
-    }else{
+    document.getElementById("title-h2").innerHTML = catName;
+
+    if (catName === "Deporte" || catName === "Vestimenta"){
         document.querySelector(".lead").innerHTML = `Verás aquí todos los productos de ${catName} del sitio`;
-        document.getElementById("title-h2").innerHTML = `Productos de ${catName}`;
-    }
+    } else if (catName === "Herramientas" || catName === "Computadoras"){
+        document.querySelector(".lead").innerHTML = `Verás aquí todas las ${catName} del sitio`;
+    } else {
+        document.querySelector(".lead").innerHTML = `Verás aquí todos los ${catName} del sitio`;
+    } 
 }
 
 function showProductInfo(productId){
@@ -38,7 +40,7 @@ function addProduct(){
             </div>
             <div class="col">
                 <div class="d-flex w-100 justify-content-between">
-                    <h4 class="mb-1">${item.name} - USD${item.cost}</h4>
+                    <h4 class="mb-1">${item.name} - ${item.currency}${item.cost}</h4>
                     <small class="text-muted">${item.soldCount} vendidos</small>
                 </div>
                 <p class="mb-1">${item.description}</p>
@@ -131,5 +133,7 @@ document.getElementById("clearRangeFilter").addEventListener("click", function()
 sortBySoldAmount.addEventListener("click", function(){
     filterProducts();
 });
+
+// CHEQUEAR FilterProducts() function
 
 //points.sort(function(a, b){return a - b});
