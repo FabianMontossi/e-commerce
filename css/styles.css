@@ -194,7 +194,7 @@ form{
   text-align: center;
 }
 
-/* LOGIN CSS */
+/* START LOGIN */
 
 .login {
 
@@ -232,7 +232,10 @@ p.login {
   background:#0B5ED7;
 }
 
-/* END LOGIN CSS */
+.dropdown{
+  display: block;
+}
+/* END LOGIN */
 
 
 

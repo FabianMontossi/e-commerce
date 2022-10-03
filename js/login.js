@@ -4,32 +4,58 @@ const password = localStorage.getItem("password");
 // Chequeamos si estamos logueados en la pagina
 function LoggedIn(){
     let varLoggedIn = false;
+
     if ((username !== null && password !== null) &&
         (username !== undefined && password !== undefined) &&
-        (username !== "" && password !== "")){
-        
+        (username.trim() !== "" && password.trim() !== "")){
+
         varLoggedIn = true;
         
-        if(document.getElementById("login")){
-            let loginUser = document.getElementById("login");
-            loginUser.textContent = "Welcome, " + username;
-            loginUser.style.color = "#0992e8";
-            loginUser.href = "#";
-        }
-        // ofrecer la posibilidad de log out con un dropdown
+        addDropdownAndUsername();
+    } else {
+        Logout();
     }
     return varLoggedIn;
 }
 
 LoggedIn();
 
+function Logout(){
+    localStorage.setItem("username", "");
+    localStorage.setItem("password", "");
+
+    if (!window.location.href.includes("login")){
+        window.location.href="login.html";
+    }
+}
+
+
+function addDropdownAndUsername(){
+    const usernameDropdown = document.getElementById("usernameDropdown");
+
+    if(document.getElementById("usernameDropdown")){
+        //usernameDropdown.textContent = "Welcome, " + username;
+        usernameDropdown.style.color = "#0992e8";
+        usernameDropdown.href = "#";
+    }
+    // ofrecer la posibilidad de log out con un dropdown
+
+    usernameDropdown.innerHTML = `<p class>Welcome, </p><div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="usernameDropdown" data-bs-toggle="dropdown" aria-expanded="false">${username}
+        </button>
+        
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
+            <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
+            <li><a class="dropdown-item" href="#" onclick="Logout();">Cerrar sesión</a></li>
+        </ul>
+    </div>`;
+}
+
 // Login.html
 if (window.location.href.includes("login")){
     document.addEventListener("DOMContentLoaded", () => {
-        if (LoggedIn() && window.location.href.includes("login")){
-            window.location.href="index.html";
-        }
-        
+
         function CheckUserPass() {
             let usernameField = document.getElementById("username").value;
             let passwordField = document.getElementById("password").value;
@@ -47,6 +73,10 @@ if (window.location.href.includes("login")){
                 // on change del input username OR password errorMsg.innerHTML = "";
             } // si ambos campos estan vacios...
         }
+        
+        if (LoggedIn() && window.location.href.includes("login")){
+            window.location.href="index.html";
+        }
 
         document.getElementById("loginBtn").addEventListener("click", function(e){
             e.preventDefault();
@@ -54,4 +84,3 @@ if (window.location.href.includes("login")){
         });
     });
 }
-

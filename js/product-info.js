@@ -1,12 +1,11 @@
 function assignProdId(){
-    if(localStorage.getItem("productId") !== null && localStorage.getItem("productId") !== ""){
+    if (localStorage.getItem("productId") !== null && localStorage.getItem("productId") !== ""){
         return localStorage.getItem("productId");
     } else{
         // Si no hay ninguno, o no existe.
         // Mostrar un cartel como el de Funcionalidad en desarrollo.
     }
 }
-
 
 const productId = localStorage.getItem("productId");
 const PRODUCT_INFO = "https://japceibal.github.io/emercado-api/products/" + assignProdId() + EXT_TYPE;
@@ -15,6 +14,27 @@ const recommendedProducts = [];
 let productToShow = "";
 let productImages = [];
 let commentaries = [];
+let relatedProductsImages = [];
+
+function changeProductId(productId){
+    localStorage.setItem('productId', productId);
+    window.location.reload();
+    //window.location.href = "product-info.html";
+}
+
+function relatedProducts(imagesArray){
+    let relatedProductsHtml = `<div class="imgContainer relatedProducts">`;
+    
+    console.log(imagesArray);
+    for (let i = 0; i < imagesArray.length; i++){
+        console.log(i);
+        relatedProductsHtml += `
+        <img class="productImg" src="${imagesArray[i]}" alt="${imagesArray[i].name}"
+        onclick="changeProductId(imagesArray[i].id.toString())" >
+        <p class="relatedProductName">${imagesArray[i].name}</p>`;
+    }
+    return relatedProductsHtml += `</div>`;
+}
 
 function showCommentaries(commentariesArray, prodId){
     let commentsHtml = "";
@@ -37,11 +57,11 @@ function showCommentaries(commentariesArray, prodId){
     return commentsHtml + `<hr>`;
 }
 
-function imagesToShow(images){
+function imagesToShow(imagesArray){
     let content = `<div class="imgContainer">`;
     
-    for (let i = 0; i < images.length; i++){
-        content += `<img class="productImg" src="${images[i]}">`; 
+    for (let i = 0; i < imagesArray.length; i++){
+        content += `<img class="productImg" src="${imagesArray[i]}" alt="Image ${i + 1}">`; 
     }
     return (content += `</div>`);
 }
@@ -101,6 +121,9 @@ function showProduct(product){
         ${imagesToShow(productImages)}
         
         <hr>
+        <h6>Producto(s) Relacionado(s):</h6>
+        ${relatedProducts(relatedProductsImages)}
+        <hr>
         <h5>Comentario(s):</h5>
 
         <div id="commentaries">
@@ -109,6 +132,7 @@ function showProduct(product){
         ${addCommentary()}
     </div>`;
 }
+
 
 async function fetchCommentaries(url){
     const response = await fetch(url);
@@ -127,9 +151,11 @@ async function fetchProduct(url){
 
     if (response.status === 200){        
         const responseContent = await response.json();
-
+        
         productImages = responseContent.images;
+        relatedProductsImages = responseContent.relatedProducts;
         showProduct(responseContent);
+        
     } else {
         alert("Unfortunately, there was something wrong while fetching the data :(");
         // Mostrar un cartel como el de Funcionalidad en desarrollo.
@@ -139,7 +165,6 @@ async function fetchProduct(url){
 document.addEventListener("DOMContentLoaded", () => {
     if (localStorage.getItem("productId") && localStorage.getItem("productId") !== ""){
         fetchCommentaries(PRODUCT_COMMENTS);
-        
     }
     else {
         // Mostrar un cartel como el de Funcionalidad en desarrollo.
