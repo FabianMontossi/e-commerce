@@ -25,13 +25,13 @@ function changeProductId(productId){
 function relatedProducts(imagesArray){
     let relatedProductsHtml = `<div class="imgContainer relatedProducts">`;
     
-    console.log(imagesArray);
     for (let i = 0; i < imagesArray.length; i++){
-        console.log(i);
         relatedProductsHtml += `
-        <img class="productImg" src="${imagesArray[i]}" alt="${imagesArray[i].name}"
-        onclick="changeProductId(imagesArray[i].id.toString())" >
-        <p class="relatedProductName">${imagesArray[i].name}</p>`;
+        <div id="prodImgAndName">
+            <img class="productImg" src="${imagesArray[i].image}" alt="${imagesArray[i].name}"
+            onclick="changeProductId(${imagesArray[i].id.toString()})" >
+            <p class="relatedProductName" style="text-align: center;">${imagesArray[i].name}</p>
+        </div>`;
     }
     return relatedProductsHtml += `</div>`;
 }
