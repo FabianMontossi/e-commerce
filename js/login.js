@@ -40,16 +40,15 @@ function addDropdownAndUsername(){
     }
     // ofrecer la posibilidad de log out con un dropdown
 
-    usernameDropdown.innerHTML = `<p class>Welcome, </p><div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="usernameDropdown" data-bs-toggle="dropdown" aria-expanded="false">${username}
-        </button>
+    usernameDropdown.innerHTML = `<p>W,<div id="divDropdown" class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="usernameDropdown" data-bs-toggle="dropdown" aria-expanded="false">${username}</button>
         
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
             <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
             <li><a class="dropdown-item" href="#" onclick="Logout();">Cerrar sesión</a></li>
         </ul>
-    </div>`;
+    </div></p>`;
 }
 
 // Login.html
