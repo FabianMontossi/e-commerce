@@ -69,7 +69,6 @@ function calculateSubtotal(unitCost, quantity){
 
 
 function showShipping(){
-    asd()
     let htmlContent = `
         <p class="headingsCart">Tipo de envío</p>
         <input type="radio" class="radioShipping" name="shippingType" value="premium" id="premium">
@@ -102,7 +101,7 @@ function showProducts(articles){
                 <td><p>${articles[i].name}</p></td>
                 <td><p>${articles[i].unitCost}</p></td>
                 <td><input id="inptCount" class="inputTxtCart" value="${articles[i].count}"></td>
-                <td id="tdSubtotal"><p>${articles[i].currency}</p></td>
+                <td id="tdSubtotal"><p>${articles[i].currency}</p> <p id="subtotal">${calculateSubtotal(articles[i].unitCost, articles[i].count)}</td>
             </tr>
         </tbody>
         `;
