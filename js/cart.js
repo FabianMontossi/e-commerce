@@ -5,6 +5,31 @@ function getUserId(){
 const CART_URL = CART_INFO_URL + getUserId() + EXT_TYPE;
 const content = document.getElementById("container");
 const inptCount = document.getElementById("inptCount");
+let tdSubtotal = document.getElementById("tdSubtotal");
+let subtotal = document.getElementById("subtotal");
+
+
+function asd(){
+   /* console.log(tdSubtotal)
+    let paragraph = document.createElement("p");
+    
+    let asd = document.createTextNode("HOLA");
+    
+    paragraph.appendChild(asd);
+    console.log("inptCount", inptCount)
+    paragraph.setAttribute("id", "subtotal");
+        console.log("tdSubtotal", tdSubtotal, "paragraph", paragraph, "subtotal", subtotal)
+        tdSubtotal.appendChild(paragraph);*/
+
+        tdSubtotal.addEventListener("load", function(){
+            inptCount.addEventListener("input", function(){
+                tdSubtotal.innerHTML += `<p id="subtotal">${calculateSubtotal(articles[i].unitCost, articles[i].count)}`;
+            });
+           /* <p id="subtotal">${calculateSubtotal(articles[i].unitCost, articles[i].count)}
+
+            ${calculateSubtotal(articles[i].unitCost, inptCount.value)}*/
+        });
+    }
 
 
 function showCart(products){
@@ -21,23 +46,32 @@ function showCart(products){
             </tr>
             ${showProducts(products.articles)}
         </table>
-        `;
-        content.innerHTML += `
         <hr class="hrCart">
         ${showShipping()}
         `;
 }
 
-function getSubtotal(unitCost, quantity){
+function calculateSubtotal(unitCost, quantity){
+    
+
+   /* function function1() {
+        var ul = document.getElementById("list");
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode("Four"));
+        ul.appendChild(li);
+      }*/
+
     // ver tema de currency
+    // first time inptCount.value = articles[i].count
+    // unitCost * inptCount.value, onChange
     return parseInt(unitCost) * parseInt(quantity);
 }
 
 
 function showShipping(){
+    asd()
     let htmlContent = `
         <p class="headingsCart">Tipo de envío</p>
-      
         <input type="radio" class="radioShipping" name="shippingType" value="premium" id="premium">
         <label for="premium">Premium - 2 a 5 días (15%)</label>
         <input type="radio" class="radioShipping" name="shippingType" value="express" id="express">
@@ -58,7 +92,6 @@ function showShipping(){
 }
 
 
-
 function showProducts(articles){
     let products = "";
     for (let i = 0; i < articles.length; i++){
@@ -68,15 +101,14 @@ function showProducts(articles){
                 <td><img class="cartProdImg" src="${articles[i].image}"></td>
                 <td><p>${articles[i].name}</p></td>
                 <td><p>${articles[i].unitCost}</p></td>
-                <td><input id="inptCount" class="inputTxtCart" value="${articles[i].count}" onInput=${getSubtotal(articles[i].count, inptCount.value)}></td>
-                <td><p>${articles[i].currency}</p> <p>${getSubtotal(articles[i].count)}</p></td>
+                <td><input id="inptCount" class="inputTxtCart" value="${articles[i].count}"></td>
+                <td id="tdSubtotal"><p>${articles[i].currency}</p></td>
             </tr>
         </tbody>
         `;
-    }
+    }console.log("DONE")
     return products;
 }
-
 
 async function fetchCart(param){
 
@@ -89,5 +121,7 @@ async function fetchCart(param){
         alert("Unfortunately, there's something wrong :("); //  !!!!!!!!!!! MISMO QUE EN AssignCatId()
     }
 }
-
+console.log("asdddd")
 fetchCart(CART_URL);
+console.log("asddd222222d")
+
