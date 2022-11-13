@@ -327,7 +327,7 @@ td p {
 
 .headingsCart {
   font-size: 1.6em;
-  padding-left: 1.3em;
+  margin-left: 1.3em;
 }
 
 .hrCart {
@@ -337,25 +337,37 @@ td p {
 }
 
 .radioShipping {
-  margin-left: 2em;
+  margin-left: 2.2em;
 }
 
+#rowShippingAddress {
+  display: block;
+}
 
+#rowShippingAddress label {
+  margin-left: 2.2em;
+}
+
+.inputTxtCart {
+  margin-left: 2.2em;
+}
 
 #tableCosts, .trCosts {
   border: 1px solid #bfbfbf;
+  background: #e8e8e8;
 }
 
 table{
-  margin-left: 2em;
+  margin-left: 2.2em;
 }
 
 .titleCosts {
-  padding-left: 0.25em;
-  padding-top: 0.25em;
+  padding-left: 0.35em;
+  padding-top: 0.35em;
 }
 
 .descriptionCosts {
-  padding-left: 0.25em;
+  color: #878787;
+  font-size: 0.95em;
 }
 /* END CART*/
