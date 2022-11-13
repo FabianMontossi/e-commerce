@@ -27,8 +27,8 @@ function relatedProducts(imagesArray){
     
     for (let i = 0; i < imagesArray.length; i++){
         relatedProductsHtml += `
-        <div id="prodImgAndName">
-            <img class="productImg" src="${imagesArray[i].image}" alt="${imagesArray[i].name}"
+        <div class="prodImgAndName">
+            <img class="productImg clickableImg" src="${imagesArray[i].image}" alt="${imagesArray[i].name}"
             onclick="changeProductId(${imagesArray[i].id.toString()})" >
             <p class="relatedProductName" style="text-align: center;">${imagesArray[i].name}</p>
         </div>`;

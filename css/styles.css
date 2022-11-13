@@ -259,6 +259,9 @@ p.login {
   min-width: 200px;
 }
 
+.clickableImg {
+  cursor: pointer;
+}
 .productImg:nth-child(1){
   margin-left: 1px;
 }
@@ -289,16 +292,28 @@ p.login {
 
 table {
   font-family: arial, sans-serif;
-  border-collapse: collapse;
+  /*border-collapse: collapse;*/
   width: 90%;
 }
 
-th {
+.thProducts {
   border-bottom: 2px solid #aaa;
 }
 
-td {
+.tdProducts {
   border-bottom: 1px solid #ddd;
+}
+
+td p {
+  margin: 0px;
+}
+/*
+#radioInputs {
+  display: flex;
+  flex-direction: column;
+}*/
+.inputCant {
+  width: 16em;
 }
 
 .h2Cart{
@@ -312,7 +327,7 @@ td {
 
 .headingsCart {
   font-size: 1.6em;
-  padding-left: 0.25em;
+  padding-left: 1.3em;
 }
 
 .hrCart {
@@ -321,4 +336,26 @@ td {
   border: 1px solid black;
 }
 
+.radioShipping {
+  margin-left: 2em;
+}
+
+
+
+#tableCosts, .trCosts {
+  border: 1px solid #bfbfbf;
+}
+
+table{
+  margin-left: 2em;
+}
+
+.titleCosts {
+  padding-left: 0.25em;
+  padding-top: 0.25em;
+}
+
+.descriptionCosts {
+  padding-left: 0.25em;
+}
 /* END CART*/
