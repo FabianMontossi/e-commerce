@@ -53,8 +53,30 @@
   </nav>
   <main>
     <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+      <h2 id="profileH2">Perfil</h2>
+      <hr>
+      <br>
+      <div id="profileDetails">
+        <label for="firstName">Primer nombre</label>
+        <input type="text" class="inputProfile firstColumn" id="firstName" required>
+        
+        <label for="secondName">Segundo nombre</label>
+        <input type="text" class="inputProfile secondColumn" id="secondName">
+        
+        <label for="firstLastname">Primer apellido</label>
+        <input type="text" class="inputProfile firstColumn" id="firstLastname" required>
+
+        <label for="secondLastname">Segundo apellido</label>
+        <input type="text" class="inputProfile secondColumn" id="secondLastname">
+
+        <label for="email">E-mail</label>
+        <input type="email" class="inputProfile firstColumn" id="email" required>
+
+        <label for="phone">Teléfono de contacto</label>
+        <input type="text" class="inputProfile secondColumn" id="phone">
+    </div>
+    <hr>
+    <button id="saveBtn">Guardar cambios</button>
       </div>
     </div>
   </main>

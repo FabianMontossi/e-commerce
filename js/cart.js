@@ -2,9 +2,9 @@ function getUserId(){
     return 25801;
 }
 
-const CART_URL = "js/test.json"; //CART_INFO_URL + getUserId() + EXT_TYPE;
+const CART_URL = CART_INFO_URL + getUserId() + EXT_TYPE;
 const content = document.getElementById("container");
-let subtotalRow = document.getElementById("subtotalRow");
+let subtotalColumn = document.getElementById("subtotalColumn");
 let articles = [];
 let subtotalCost = "";
 
@@ -23,6 +23,7 @@ function calculateFinalSubtotal(){
     for (let i = 0; i < articles.length; i++){
         subtotal += document.getElementById("subtotal" + i).textContent;
     }
+    console.log(document.getElementById("subtotal" + i).textContent)
 }
 
 function showCosts(){
@@ -32,7 +33,7 @@ function showCosts(){
         <table id="tableCosts">
             <tr class="trCosts">
                 <td class="titleCosts">Subtotal <p class="descriptionCosts">Costo unitario del producto por cantidad</p></td>
-                <td class="costsValues">${subtotalRow.textContent}</td>
+                <td class="costsValues">{calculateFinalSubtotal()}</td>
             </tr>
 
             <tr class="trCosts">
@@ -95,11 +96,11 @@ function showProducts(){
     for (let i = 0; i < articles.length; i++){
         products += ` 
             <tr>
-                <td class="tdProducts"><img class="cartProdImg" src="${articles[i].image}"></td>
+                <td class="tdProducts "><img class="cartProdImg" src="${articles[i].image}"></td>
                 <td class="tdProducts"><p>${articles[i].name}</p></td>
                 <td class="tdProducts"><p>${articles[i].unitCost}</p></td>
                 <td class="tdProducts inputCant"><input id="inptCount${i}" class="inputTxtCart" value="${articles[i].count}" oninput="calculateRowSubtotal(${i})"></td>
-                <td id="subtotalRow" class="tdProducts"><div>${articles[i].currency} <p id="subtotal${i}" style="display: inline;">${baseSubtotal(i)}</p></div></td>
+                <td id="subtotalColumn${i}" class="tdProducts"><div>${articles[i].currency} <p id="subtotal${i}" style="display: inline;">${baseSubtotal(i)}</p></div></td>
             </tr>
         `;
         

@@ -349,7 +349,7 @@ td p {
 }
 
 .inputTxtCart {
-  margin-left: 2.2em;
+  margin-left: 0em;
 }
 
 #tableCosts, .trCosts {
@@ -371,3 +371,15 @@ table{
   font-size: 0.95em;
 }
 /* END CART*/
+
+/* PROFILE START */
+
+#profileDetails {
+  width: 65%;
+}
+
+.inputProfile {
+  margin: 1em;
+}
+
+/* END PROFILE */
